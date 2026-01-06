@@ -1,0 +1,25 @@
+1️⃣ สร้าง Virtual Environment (venv)
+เปิด Terminal ใน VS Code (Ctrl + `) แล้วรัน
+python -m venv venv
+
+2️⃣ Activate venv
+▶ Windows (PowerShell / CMD)
+venv\Scripts\activate
+
+3️⃣ อัปเดต pip (แนะนำ)
+python -m pip install --upgrade pip
+
+7️⃣ ตั้งค่า Interpreter ให้ตรงกับ venv (สำคัญ)
+กด
+Ctrl + Shift + P → พิมพ์
+Python: Select Interpreter
+เลือก
+./venv/Scripts/python.exe
+
+
+📌 Best Practice (แนะนำ)
+หลังติดตั้งเสร็จ ทำไฟล์ requirements.txt
+pip freeze > requirements.txt
+
+และเวลาย้ายเครื่อง / แชร์โปรเจกต์:
+pip install -r requirements.txt
