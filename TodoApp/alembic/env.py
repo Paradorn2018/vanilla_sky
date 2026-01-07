@@ -5,18 +5,24 @@ from alembic import context
 from sqlalchemy import create_engine, pool
 from dotenv import load_dotenv
 
+import models  # ต้องมี Base อยู่ในนี้
+
+# โหลด .env
 load_dotenv()
 
+# Alembic Config
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# ใช้ DATABASE_URL ตรง ๆ (dev mode)
 DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL not found")
 
-from models import Base
-target_metadata = Base.metadata
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL not found in .env")
+
+# metadata สำหรับ autogenerate
+target_metadata = models.Base.metadata
 
 
 def run_migrations_offline():
@@ -34,11 +40,13 @@ def run_migrations_online():
         DATABASE_URL,
         poolclass=pool.NullPool,
     )
+
     with engine.connect() as connection:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
         )
+
         with context.begin_transaction():
             context.run_migrations()
 
