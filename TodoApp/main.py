@@ -3,14 +3,13 @@ from sqlalchemy.orm import Session
 
 from pydantic import BaseModel, Field
 from fastapi import FastAPI, Depends, HTTPException, status, Path
-import models 
-from models import Todos
-from database import engine, SessionLocal
-from routers import auth, todos, admin, users
+from .models import Base
+from .database import engine, SessionLocal
+from .routers import auth, todos, admin, users
 
 app = FastAPI()
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 @app.get("/healthy")
 def health_check():
